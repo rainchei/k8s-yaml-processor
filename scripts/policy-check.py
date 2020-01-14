@@ -10,6 +10,7 @@ def main():
             # policy 1: validate_required_for_container.
             required = ['name', 'image', 'resources']
             if not validate_required_for_container(data=data, c_req=required):
+                # failed policy 1.
                 sys.exit(2)
 
 def validate_required_for_container(data, c_req):
