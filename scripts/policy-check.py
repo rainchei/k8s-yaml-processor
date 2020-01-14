@@ -31,11 +31,13 @@ def validate_required_for_container(data, c_req):
             d_set = set(c.keys())
             if not d_set >= c_req_set:
                 missing_keys = list(c_req_set - d_set)
-                print(err_msg(
+                print(
+                    err_msg(
                         lvl="ERR",
                         sub="Missing required keys in containers",
                         msg=", ".join(str(e) for e in missing_keys)
-                    )
+                    ),
+                    file=sys.stderr
                 )
                 result = False
     elif data['kind'] == "CronJob":
@@ -43,11 +45,13 @@ def validate_required_for_container(data, c_req):
             d_set = set(c.keys())
             if not d_set >= c_req_set:
                 missing_keys = list(c_req_set - d_set)
-                print(err_msg(
+                print(
+                    err_msg(
                         lvl="ERR",
                         sub="Missing required keys in containers",
                         msg=", ".join(str(e) for e in missing_keys)
-                    )
+                    ),
+                    file=sys.stderr
                 )
                 result = False
     return result
