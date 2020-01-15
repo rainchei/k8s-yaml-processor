@@ -1,0 +1,23 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: sample
+spec:
+  schedule: '* * * * *'
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: sample
+        spec:
+          containers:
+          - name: sample
+            image: busybox
+            resources:
+              limits:
+                cpu: 200m
+                memory: 100Mi
+              requests:
+                cpu: 50m
+                memory: 100Mi

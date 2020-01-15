@@ -12,7 +12,7 @@ spec:
         app: sample
     spec:
       containers:
-      - name: foo
+      - name: sample-foo
         image: busybox
         resources:
           limits:
@@ -21,7 +21,7 @@ spec:
           requests:
             cpu: 50m
             memory: 100Mi
-      - name: bar
+      - name: sample-bar
         image: busybox
         resources:
           limits:
