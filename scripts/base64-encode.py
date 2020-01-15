@@ -15,7 +15,7 @@ def main():
                 for k,v in data['data'].items():
                     data['data'][k] = base64.b64encode(v.encode('utf-8')).decode('utf-8')
                 result.append(data)
-            elif data['kind'] == 'Namespace':
+            elif 'kind' in data.keys():
                 result.append(data)
     yaml.dump_all(result, sys.stdout)
 

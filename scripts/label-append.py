@@ -60,7 +60,7 @@ def main():
                 image = ', '.join(i[i.find('/')+1:] for i in image_ls)  # remove all chars before the first '/'
                 data['spec']['jobTemplate']['spec']['template']['metadata']['labels']['image'] = image
                 result.append(data)
-            elif data['kind'] == 'Namespace':
+            elif 'kind' in data.keys():
                 result.append(data)
     yaml.dump_all(result, sys.stdout)
 
