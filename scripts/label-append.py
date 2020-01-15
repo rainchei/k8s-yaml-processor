@@ -49,7 +49,7 @@ def main():
                 data['spec']['template']['metadata']['labels']['tag'] = tag
                 # add label: image
                 image_ls = [c['image'] for c in data['spec']['template']['spec']['containers']]
-                image = ', '.join(i[i.find('/')+1:] for i in image_ls)
+                image = ', '.join(i[i.find('/')+1:] for i in image_ls)  # remove all chars before the first '/'
                 data['spec']['template']['metadata']['labels']['image'] = image
                 result.append(data)
             if (data['kind'] == "CronJob"):
@@ -57,7 +57,7 @@ def main():
                 data['spec']['jobTemplate']['spec']['template']['metadata']['labels']['tag'] = tag
                 # add label: image
                 image_ls = [c['image'] for c in data['spec']['jobTemplate']['spec']['template']['spec']['containers']]
-                image = ', '.join(i[i.find('/')+1:] for i in image_ls)
+                image = ', '.join(i[i.find('/')+1:] for i in image_ls)  # remove all chars before the first '/'
                 data['spec']['jobTemplate']['spec']['template']['metadata']['labels']['image'] = image
                 result.append(data)
     yaml.dump_all(result, sys.stdout)
