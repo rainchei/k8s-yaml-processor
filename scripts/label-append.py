@@ -47,18 +47,22 @@ def main():
                (data['kind'] == "DaemonSet"):
                 # add label: tag
                 data['spec']['template']['metadata']['labels']['tag'] = tag
-                # add label: image
+                # add label: imageName, imageVersion
                 image_ls = [c['image'] for c in data['spec']['template']['spec']['containers']]
-                image = ', '.join(i[i.find('/')+1:] for i in image_ls)  # remove all chars before the first '/'
-                data['spec']['template']['metadata']['labels']['image'] = image
+                image_name = '_'.join(i.split(':')[0][i.split(':')[0].rfind('/')+1:] for i in image_ls)  # remove all chars before the last '/'
+                image_version = '_'.join(i.split(':')[1] for i in image_ls)
+                data['spec']['template']['metadata']['labels']['imageName'] = image_name
+                data['spec']['template']['metadata']['labels']['imageVersion'] = image_version
                 result.append(data)
             elif data['kind'] == "CronJob":
                 # add label: tag
                 data['spec']['jobTemplate']['spec']['template']['metadata']['labels']['tag'] = tag
-                # add label: image
+                # add label: imageName, imageVersion
                 image_ls = [c['image'] for c in data['spec']['jobTemplate']['spec']['template']['spec']['containers']]
-                image = ', '.join(i[i.find('/')+1:] for i in image_ls)  # remove all chars before the first '/'
-                data['spec']['jobTemplate']['spec']['template']['metadata']['labels']['image'] = image
+                image_name = '_'.join(i.split(':')[0][i.split(':')[0].rfind('/')+1:] for i in image_ls)  # remove all chars before the last '/'
+                image_version = '_'.join(i.split(':')[1] for i in image_ls)
+                data['spec']['jobTemplate']['spec']['template']['metadata']['labels']['imageName'] = image_name
+                data['spec']['jobTemplate']['spec']['template']['metadata']['labels']['imageVersion'] = image_version
                 result.append(data)
             elif 'kind' in data.keys():
                 result.append(data)

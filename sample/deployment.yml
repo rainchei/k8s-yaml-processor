@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: sample-foo
-        image: busybox
+        image: busybox:1.31.1
         resources:
           limits:
             cpu: 200m
@@ -22,7 +22,7 @@ spec:
             cpu: 50m
             memory: 100Mi
       - name: sample-bar
-        image: busybox
+        image: busybox:1.31.1
         resources:
           limits:
             cpu: 200m
