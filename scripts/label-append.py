@@ -52,13 +52,15 @@ def main():
                 image = ', '.join(i[i.find('/')+1:] for i in image_ls)  # remove all chars before the first '/'
                 data['spec']['template']['metadata']['labels']['image'] = image
                 result.append(data)
-            if (data['kind'] == "CronJob"):
+            elif data['kind'] == "CronJob":
                 # add label: tag
                 data['spec']['jobTemplate']['spec']['template']['metadata']['labels']['tag'] = tag
                 # add label: image
                 image_ls = [c['image'] for c in data['spec']['jobTemplate']['spec']['template']['spec']['containers']]
                 image = ', '.join(i[i.find('/')+1:] for i in image_ls)  # remove all chars before the first '/'
                 data['spec']['jobTemplate']['spec']['template']['metadata']['labels']['image'] = image
+                result.append(data)
+            elif data['kind'] == 'Namespace':
                 result.append(data)
     yaml.dump_all(result, sys.stdout)
 
