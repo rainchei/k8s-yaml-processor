@@ -46,23 +46,25 @@ def main():
             if (data['kind'] == "Deployment") or \
                (data['kind'] == "DaemonSet"):
                 # add label: tag
-                data['spec']['template']['metadata']['labels']['tag'] = tag[-63:]
-                # add label: imageName, imageVersion
+                data['spec']['template']['metadata']['labels']['tag'] = tag
+                # add label: imageName.n, imageVersion.n
                 image_ls = [c['image'] for c in data['spec']['template']['spec']['containers']]
-                image_name = 'x_' + '_'.join(i.split(':')[0][i.split(':')[0].rfind('/')+1:][-16:] for i in image_ls)           # remove all chars before the last '/', and
-                image_version = 'x_' + '_'.join(i.split(':')[1][-16:] for i in image_ls)                                       # each was truncated to last 16 chars, and
-                data['spec']['template']['metadata']['labels']['imageName'] = image_name                                       # starts with 'x_'
-                data['spec']['template']['metadata']['labels']['imageVersion'] = image_version
+                for n,i in enumerate(image_ls):
+                    i_name = i.split(':')[0][i.split(':')[0].rfind('/')+1:]
+                    i_version = i.split(':')[1]
+                    data['spec']['template']['metadata']['labels']['imageName.' + str(n)] = i_name
+                    data['spec']['template']['metadata']['labels']['imageVersion.' + str(n)] = i_version
                 result.append(data)
             elif data['kind'] == "CronJob":
                 # add label: tag
-                data['spec']['jobTemplate']['spec']['template']['metadata']['labels']['tag'] = tag[-63:]
-                # add label: imageName, imageVersion
+                data['spec']['jobTemplate']['spec']['template']['metadata']['labels']['tag'] = tag
+                # add label: imageName.n, imageVersion.n
                 image_ls = [c['image'] for c in data['spec']['jobTemplate']['spec']['template']['spec']['containers']]
-                image_name = 'x_' + '_'.join(i.split(':')[0][i.split(':')[0].rfind('/')+1:][-16:] for i in image_ls)           # remove all chars before the last '/', and
-                image_version = 'x_' + '_'.join(i.split(':')[1][-16:] for i in image_ls)                                       # each was truncated to last 16 chars
-                data['spec']['jobTemplate']['spec']['template']['metadata']['labels']['imageName'] = image_name                # starts with 'x_'
-                data['spec']['jobTemplate']['spec']['template']['metadata']['labels']['imageVersion'] = image_version
+                for n,i in enumerate(image_ls):
+                    i_name = i.split(':')[0][i.split(':')[0].rfind('/')+1:]
+                    i_version = i.split(':')[1]
+                    data['spec']['jobTemplate']['spec']['template']['metadata']['labels']['imageName.' + str(n)] = i_name
+                    data['spec']['jobTemplate']['spec']['template']['metadata']['labels']['imageVersion.' + str(n)] = i_version
                 result.append(data)
             elif 'kind' in data.keys():
                 result.append(data)
