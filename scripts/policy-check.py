@@ -11,7 +11,7 @@ def main():
             required = ['name', 'image', 'resources']
             if not validate_required_for_container(data=data, c_req=required):
                 # policy 1: failed.
-                sys.exit(2)
+                return 2
 
 def validate_required_for_container(data, c_req):
     """Validate required keys for container in k8s object.
