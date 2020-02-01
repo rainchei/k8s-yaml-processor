@@ -4,6 +4,14 @@ from ruamel.yaml import YAML
 
 
 def main():
+    """Apply policy check for kubernetes yaml files.
+
+    Stdin:
+      yaml
+
+    Returns:
+      bool
+    """
     yaml = YAML()
     for data in list(yaml.load_all(sys.stdin)):
         if data is not None:
@@ -11,7 +19,7 @@ def main():
             required = ['name', 'image', 'resources']
             if not validate_required_for_container(data=data, c_req=required):
                 # policy 1: failed.
-                return 2
+                sys.exit(2)
 
 def validate_required_for_container(data, c_req):
     """Validate required keys for container in k8s object.
