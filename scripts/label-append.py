@@ -44,7 +44,8 @@ def main():
     for data in list(yaml.load_all(sys.stdin)):
         if data is not None:
             if (data['kind'] == "Deployment") or \
-               (data['kind'] == "DaemonSet"):
+               (data['kind'] == "DaemonSet") or \
+               (data['kind'] == "StatefulSet"):
                 # add label: tag
                 data['spec']['template']['metadata']['labels']['tag'] = tag
                 # add label: imageName.n, imageVersion.n
