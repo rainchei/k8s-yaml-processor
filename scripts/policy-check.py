@@ -34,7 +34,8 @@ def validate_required_for_container(data, c_req):
     c_req_set = set(c_req)
     result = True
     if (data['kind'] == "Deployment") or \
-       (data['kind'] == "DaemonSet"):
+       (data['kind'] == "DaemonSet") or \
+       (data['kind'] == "StatefulSet"):
         for i,c in enumerate(data['spec']['template']['spec']['containers']):
             d_set = set(c.keys())
             if not d_set >= c_req_set:
