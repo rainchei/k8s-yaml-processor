@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sample
+data:
+  MY_CONFIG: sample-config
+type: Opaque
