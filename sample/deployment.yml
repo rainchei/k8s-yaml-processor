@@ -11,6 +11,11 @@ spec:
       labels:
         app: sample
     spec:
+      initContainers:
+      - name: init-foo
+        image: busybox:1.31.1
+      - name: init-bar
+        image: busybox:1.31.1
       containers:
       - name: sample-foo
         image: busybox:1.31.1
